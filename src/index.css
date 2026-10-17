@@ -1,0 +1,189 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+/* Archivo com eixo de largura: a versão larga ecoa as letras espaçadas do logo */
+@import "@fontsource-variable/archivo/wdth.css";
+/* Oswald: condensada, para os títulos em maiúsculas */
+@import "@fontsource/oswald/600.css";
+@import "@fontsource/oswald/700.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-sans: 'Archivo Variable', system-ui, sans-serif;
+    --font-heading: 'Oswald', 'Arial Narrow', sans-serif;
+    --color-navy: var(--navy);
+    --color-navy-deep: var(--navy-deep);
+    --color-navy-raised: var(--navy-raised);
+    --color-white: var(--white);
+    --color-mist: var(--mist);
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+    /*
+     * Paleta (--navy, --navy-deep, --navy-raised, --white, --mist) vem de src/conteudo.ts
+     * e é aplicada no carregamento (src/main.tsx). Os tokens abaixo só apontam para ela.
+     * Seções escuras usam estes tokens; .secao-clara inverte para fundo branco.
+     */
+    --background: var(--navy);
+    --foreground: var(--white);
+    --card: var(--navy-raised);
+    --card-foreground: var(--white);
+    --popover: var(--navy-deep);
+    --popover-foreground: var(--white);
+    --primary: var(--white);
+    --primary-foreground: var(--navy);
+    --secondary: var(--navy-raised);
+    --secondary-foreground: var(--white);
+    --muted: var(--navy-raised);
+    --muted-foreground: var(--mist);
+    --accent: var(--navy-raised);
+    --accent-foreground: var(--white);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(from var(--white) l c h / 14%);
+    --input: oklch(from var(--white) l c h / 14%);
+    --ring: var(--white);
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --radius: 0.5rem;
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar-primary: oklch(0.205 0 0);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.97 0 0);
+    --sidebar-accent-foreground: oklch(0.205 0 0);
+    --sidebar-border: oklch(0.922 0 0);
+    --sidebar-ring: oklch(0.708 0 0);
+}
+
+/* Seção clara: mesmos tokens, papéis invertidos (fundo branco, texto azul) */
+.secao-clara {
+    --background: var(--white);
+    --foreground: var(--navy);
+    --card: var(--white);
+    --card-foreground: var(--navy);
+    --primary: var(--navy);
+    --primary-foreground: var(--white);
+    --muted-foreground: color-mix(in oklab, var(--navy) 78%, var(--white));
+    --border: oklch(from var(--navy) l c h / 16%);
+    --ring: var(--navy);
+    background-color: var(--background);
+    color: var(--foreground);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+    scroll-padding-top: 6.5rem;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "ss01";
+  }
+  ::selection {
+    background: var(--white);
+    color: var(--navy);
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  /* Títulos: Oswald condensada, em maiúsculas e com peso forte */
+  .titulo-display {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.005em;
+    line-height: 0.95;
+    text-wrap: balance;
+  }
+  .titulo-secao {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+  .titulo-item {
+    font-stretch: 112%;
+    font-weight: 650;
+  }
+}
+
+/* Tom azul-marinho sobre as fotos do topo (55%) e degradê até o fundo da página embaixo, onde fica o texto */
+.topo-camada {
+  background:
+    linear-gradient(180deg, oklch(from var(--navy-deep) l c h / 45%) 0%, transparent 22%, transparent 38%, oklch(from var(--navy) l c h / 80%) 72%, var(--navy) 100%),
+    oklch(from var(--navy) l c h / 55%);
+}
+/* No celular: tom mais leve (30%) e degradê só na metade de baixo, atrás do texto */
+@media (max-width: 767px) {
+  .topo-camada {
+    background:
+      linear-gradient(180deg, oklch(from var(--navy-deep) l c h / 40%) 0%, transparent 12%, transparent 45%, oklch(from var(--navy) l c h / 82%) 68%, var(--navy) 100%),
+      oklch(from var(--navy) l c h / 30%);
+  }
+  /* Com a camada mais leve, o texto que fica sobre a foto ganha uma sombra suave */
+  .topo-texto {
+    text-shadow: 0 1px 2px oklch(from var(--navy-deep) l c h / 70%), 0 2px 18px oklch(from var(--navy-deep) l c h / 65%);
+  }
+}
+
+/* Carrossel do topo: troca suave por opacidade */
+.topo-foto {
+  transition: opacity 1.4s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .topo-foto { transition: none; }
+}
